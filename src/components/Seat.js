@@ -1,25 +1,23 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import "../App.css";
-import { takeSeatAction } from "../actions/takeSeatAction";
+import { func, string } from "prop-types";
 
-const mapStateToProps = state => ({
-  ...state
-});
+const propTypes = {
+    takeSeatAction: func.isRequired,
+    seatLocation: string.isRequired,
+};
 
-const mapDispatchToProps = dispatch => ({
-  takeSeatAction: id => dispatch(takeSeatAction(id))
-});
+const Seat = props => {
+    const seatLocation = props.seatLocation;
 
-class Seat extends Component {
-  seatLocation = this.props.seatLocation;
+    const takeSeat = event => { // eslint-disable-line
+        // eslint-disable-line
+        props.takeSeatAction(seatLocation);
+    };
 
-  takeSeatAction = event => {
-    this.props.takeSeatAction(this.seatLocation);
-  };
+    return <button onClick={takeSeat}>{seatLocation}</button>;
+};
 
-  render() {
-    return <button onClick={this.takeSeatAction}>{this.seatLocation}</button>;
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Seat);
+Seat.propTypes = propTypes;
+
+export default Seat;
